@@ -76,7 +76,7 @@ pub fn metric_thread_loop(influx_args: InfluxDBArgs) {
                 host: host_name.clone(),
                 extra: extra.clone(),
                 cpu: curr_cpu,
-                value: usage,
+                value: usage.clamp(f64::MIN, f64::MAX),
             }.into_query(OS_CPU_USER);
 
             readings.push(reading);
