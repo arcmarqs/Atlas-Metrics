@@ -71,13 +71,12 @@ pub fn metric_thread_loop(influx_args: InfluxDBArgs) {
         let mut curr_cpu = 0;
 
         for usage in result {
-            println!("usage {:?}", usage);
             let reading = MetricCPUReading {
                 time,
                 host: host_name.clone(),
                 extra: extra.clone(),
                 cpu: curr_cpu,
-                value: usage,
+                value: usage.min(1.0)
             }.into_query(OS_CPU_USER);
 
             readings.push(reading);
